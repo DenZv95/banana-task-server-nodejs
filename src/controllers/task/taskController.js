@@ -7,8 +7,6 @@ import Task from "../../models/taskModel.js";
 // @access  Private
 export const createTask = asyncHandler(async (req, res) => {
   const { name, complete } = req.body;
-
-  const task = await Task.create({ name, complete });
-
+  const task = await Task.create({ user: req.user._id, name, complete });
   res.json(task);
 });
