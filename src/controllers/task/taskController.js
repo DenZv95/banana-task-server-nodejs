@@ -10,3 +10,11 @@ export const createTask = asyncHandler(async (req, res) => {
   const task = await Task.create({ user: req.user._id, name, complete });
   res.json(task);
 });
+
+// @desc    Get list of tasks
+// @route   GET /api/tasks/list
+// @access  Private
+export const getTasks = asyncHandler(async (req, res) => {
+  const task = await Task.find({ user: req.user._id });
+  res.json(task);
+});
