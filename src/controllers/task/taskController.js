@@ -19,6 +19,27 @@ export const getTasks = asyncHandler(async (req, res) => {
   res.json(task);
 });
 
+// @desc    Update task
+// @route   PUT /api/tasks/update
+// @access  Private
+export const updateTask = asyncHandler(async (req, res) => {
+  const { taskId, name, complete } = req.body;
+
+  const task = await Task.findById(taskId);
+
+  if (!task) {
+    res.status(404);
+    throw new Error("Задача не найдена!");
+  }
+
+  task.name = name ? name : task.name;
+  task.complete = complete ? complete : task.complete;
+
+  const updatedTask = await task.save();
+
+  res.json(updatedTask);
+});
+
 // @desc    Delete task
 // @route   DELETE /api/tasks/delete
 // @access  Private
