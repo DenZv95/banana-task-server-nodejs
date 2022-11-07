@@ -18,3 +18,21 @@ export const getTasks = asyncHandler(async (req, res) => {
   const task = await Task.find({ user: req.user._id });
   res.json(task);
 });
+
+// @desc    Delete task
+// @route   DELETE /api/tasks/delete
+// @access  Private
+export const deleteTask = asyncHandler(async (req, res) => {
+  const { taskId } = req.body;
+
+  const task = await Task.findById(taskId);
+
+  if (!task) {
+    res.status(404);
+    throw new Error("Задача не найдена!");
+  }
+
+  await task.remove();
+
+  res.json({ message: "Задача успешно удалена" });
+});
