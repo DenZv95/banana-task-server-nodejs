@@ -33,7 +33,7 @@ export const updateTask = asyncHandler(async (req, res) => {
   }
 
   task.name = name ? name : task.name;
-  task.complete = complete ? complete : task.complete;
+  task.complete = !!complete ? complete : task.complete;
 
   const updatedTask = await task.save();
 
